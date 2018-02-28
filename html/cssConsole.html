@@ -1,0 +1,295 @@
+<div class="row startConsole">
+<script src="js/cssConsole.js"></script>
+
+
+
+<style>
+
+
+.row > .containerConsole {
+border: initial;
+height: initial;
+background-color:black;
+margin: 50px auto;
+height: 350px;
+width: 600px;
+position:relative;
+border:1px solid #fefefe;
+font-family: courier;
+width: 700px;
+}
+
+.bottom > #input {
+
+background-color:black;
+width: 590px; 	
+display:inline-block;
+position:relative;
+float:left;
+}
+
+.bottom {
+position:absolute;
+bottom:5px;
+width: 100%;
+}
+
+.label {
+width: 30px;
+position: relative;
+left: 15px;
+top:5px;
+color: #fefefe;
+float:left;
+}
+
+.console {
+
+position:absolute;
+bottom:32px;
+overflow:hidden;
+}
+
+.white{
+color: #fefefe;
+}
+
+.blue{
+color: #81bbd5;
+}
+
+.line {
+margin-left: 15px;
+margin-bottom:2px;
+}
+
+.margin {
+margin-left: 40px;
+margin-bottom:2px;
+}
+
+</style>
+
+	<div class="containerConsole" style="margin-left: auto; margin-right: auto">
+		<div class="console">
+			<div class="line white">Welcome to Git Learning Consol! Type 'git help' for command list.</div>
+		</div>
+		<div class="bottom">
+			<div class="label">></div>
+			<div id="input"></div>
+		</div>
+	</div>  
+<script>
+$(document).ready(function() {
+    $('#input').find('input').focus();
+});
+
+
+$('#input').cssConsole({
+	inputName:'console',
+	charLimit: 100,
+	onEnter: function(){
+		addLine("> "+$('#input').find('input').val());
+		execCommand($('#input').find('input').val());
+		$('#input').cssConsole('reset');	
+		$('#input').find('input').focus();
+	}
+});
+
+var lineLimit = 14;
+
+$('.containerConsole').on('click', function() {
+	$('#input').find('input').focus();
+});
+
+function addLine(input, style, color) {
+		if($('.console div').length==lineLimit) {
+			$('.console div').eq(0).remove();
+		}
+		style = typeof style !== 'undefined' ? style : 'line';
+		color = typeof color !== 'undefined' ? color : 'white';
+		$('.console').append('<div class="'+style+' '+color+'">'+input+'</div>');
+}
+
+function execCommand(command){
+    if ( commands[command] ) {
+      return commands[command]();
+    } else {
+      addLine("Command '" + command + "' was not found.");
+    }   
+}
+
+var commands = {
+	"git help": function (){
+		addLine("Available command list:");
+		addLine("Type `git help 'name' to find out more about the function `name'.");
+		addLine("git init", 'margin');
+		addLine("git status", 'margin');
+		addLine("git add", 'margin');
+		addLine("git commit", 'margin');
+		addLine("git clone", 'margin');
+		addLine("git pull", 'margin');
+	},
+
+	"git help init": function (){
+		addLine("Command description:");
+		addLine("$ git init [project-name]", 'margin');
+		addLine("Creates a new local repository with the specified name.");
+	},
+
+	"git help status": function (){
+		addLine("Command description:");
+		addLine("$ git status", 'margin');
+		addLine("Lists all new or modified files to be commited.");
+	},
+
+	"git help add": function (){
+		addLine("Command description:");
+		addLine("$ git add [file]", 'margin');
+		addLine("The git add command adds a change in the working directory to the staging area. And makes the file(s) ready for versoning.");
+	},
+
+	"git help commit": function (){
+		addLine("Command description:");
+		addLine("$ git commit -m [descriptive message]", 'margin');
+		addLine("Records file snapshots permanently in version history.");
+	},
+
+	"git help clone": function (){
+		addLine("Command description:");
+		addLine("$ git clone [url]", 'margin');
+		addLine("Downloads a project and its entire version history.");
+	},
+
+	"git help pull": function (){
+		addLine("Command description:");
+		addLine("$ git pull", 'margin');
+		addLine("Downloads bookmark history and incorporates changes.");
+	},
+
+	"git init": function (){
+		addLine("Initialized empty Git repository in /home/root/.git/");
+		addLine("<br> ", 'margin');
+		addLine("Step 2: Create a file and append some text to it.");
+		addLine('<span class="notranslate">Type: echo "This is one line" >> test.txt</span>');
+	},
+
+	"git status": function (){
+		addLine("On branch master");
+		addLine("<br>", 'margin');
+		addLine("Initial commit", 'margin');
+		addLine("<br>", 'margin');
+		addLine("Changes to be committed:");
+		addLine("<span style='color:green'>new file: test.txt</span>",'margin');
+		addLine(" <br>",'margin');
+		addLine("You will be redirected in 5 sec.", 'margin');
+		setTimeout(function(){
+		alert("Perfect! Nice work! Press OK to continue to next step.");
+		window.location.href = "http://e-learning.martinpedersen.no/Steg/commit.php";
+	},5000);
+		/*addLine(' (use git commit -m "Added new file" to commit and continue to next step) ');*/
+	},
+
+		'echo "This is one line" >> test.txt': function (){
+		addLine("You now added one line to the file test.txt");
+		alert("Success! You now added one line to the file test.txt. Press OK to continue to next step.")
+		window.location.href = "http://e-learning.martinpedersen.no/Steg/add.php";
+
+	},
+
+		'echo "This is another line" >> test.txt': function (){
+		addLine("You now added another line to the file test.txt");
+	},
+
+			'git add test.txt': function (){
+		alert("Success! You now added the file test.txt to the staging area. Press OK to continue to next step.")
+		window.location.href = "http://e-learning.martinpedersen.no/Steg/status.php";
+	},
+
+		'git commit -m "Added new file"': function (){
+		addLine("[master (root-commit) ff061d7] Added new file");
+		addLine("1 file changed, 1 insertion(+)", 'margin');
+		addLine("create mode 100644 test.txt",'margin');
+		addLine("<br>You will redirected in 5 sec.",'margin');
+		setTimeout(function(){
+		alert("Awesome!! You did your first commit! Now you need to push your changes to GitHub. Press OK to do this in the next step.");
+		window.location.href = "http://e-learning.martinpedersen.no/Steg/push.php";
+	},5000);
+	},
+
+			'git push': function (){
+		addLine("Counting objects: 1, done.", 'margin');
+		addLine("Delta compression using up to 4 threads.", 'margin');
+		addLine("create mode 100644 test.txt",'margin');
+		addLine("Compressing objects: 100% (1/1), done.", 'margin');
+		addLine("Writing objects: 100% (1/1), 1.08 KiB | 0 bytes/s, done.",'margin');
+		addLine("To https://github.com/test/test",'margin');
+		addLine("b66f740..1089dff  master -> master",'margin');
+		addLine("<br>You will redirected in 5 sec.",'margin');
+		setTimeout(function(){
+		alert("Success! You pushed your changes to GitHub! Nice work! Press OK to continue to the next step.");
+		window.location.href = "http://e-learning.martinpedersen.no/Steg/pull.php";
+	},5000);
+	},
+
+		'git pull': function (){
+		addLine("remote: Counting objects: 2, done.", 'margin');
+		addLine("remote: Total 12 (delta 10), reused 2 (delta 1), pack-reused 1", 'margin');
+		addLine("Unpacking objects: 100% (2/2), done.",'margin');
+		addLine("From https://github.com/welearncodes/e-learning", 'margin');
+		addLine("Writing objects: 100% (1/1), 1.08 KiB | 0 bytes/s, done.",'margin');
+		addLine("2b163de..665f04b  master     -> origin/master",'margin');;
+		addLine("<br>You will redirected in 5 sec.",'margin');
+		setTimeout(function(){
+		alert("Perfecto! You just pulled your teams last changes from GitHub! Nice work! Press OK to continue to the next step and learn to clone a Git repository.");
+		window.location.href = "http://e-learning.martinpedersen.no/Steg/clone.php";
+	},5000);
+	},
+
+			'git clone https://github.com/welearncodes/e-learning.git': function (){
+		addLine("Cloning into test...", 'margin');
+		addLine("remote: Total 12 (delta 10), reused 2 (delta 1), pack-reused 1", 'margin');
+		addLine("remote: Counting objects: 526, done.",'margin');
+		addLine("remote: Total 526 (delta 36), reused 36 (delta 36), pack-reused 488", 'margin');
+		addLine("Receiving objects: 100% (526/526), 1.46 MiB | 585.00 KiB/s, done.",'margin');
+		addLine("Resolving deltas: 100% (311/311), done.",'margin');
+		addLine("Checking connectivity... done., done.",'margin');
+		addLine("<br>You will redirected in 5 sec.",'margin');
+		setTimeout(function(){
+		alert("Perfecto! You just pulled your teams last changes from GitHub! Nice work! Press OK to continue to the next step and learn to clone a Git repository.");
+		window.location.href = "http://e-learning.martinpedersen.no/Steg/ferdig.php";
+	},5000);
+	},
+
+		"cat test.txt": function (){
+		addLine("This is one line");
+		addLine("This is another line");
+	},
+	ls: function(){
+		addLine(".");
+		addLine("..");
+		addLine("Applications", 'margin', 'blue');
+		addLine("Documents", 'margin', 'blue');
+		addLine("Downloads", 'margin', 'blue');
+		addLine("Movies", 'margin', 'blue');
+		addLine("Music", 'margin', 'blue');
+		addLine("System", 'margin', 'blue');
+		addLine("test.txt", 'margin', 'blue');		
+	},
+	ps: function() {
+		addLine("Running processes:");
+		addLine("name: browser pid:8876", 'margin');
+		addLine("name: movie player pid:3213", 'margin');
+		addLine("name: system pid:0012", 'margin');
+	}
+}
+</script>
+
+
+</div>
+
+
+  
+
+
+

@@ -1,0 +1,65 @@
+/*.videowrapper { 
+        float: none;
+        clear: both;
+        width: 1080px;
+        position: relative;
+        padding-bottom: 56.25%;
+        padding-top: 25px;
+        height: 0;
+        margin: 0 auto;
+        max-width: 100%;
+    }*/
+
+.videowrapper {
+text-align: center;
+margin-left: auto;
+margin-right: auto;
+}
+
+
+.knapper {
+    padding-top: 2em;
+    padding-bottom: 2em;
+}
+
+.knapper .btn{
+    width: 50%;
+    margin-left: auto;
+    margin-right: auto;
+
+}
+
+#bilderMain {
+    text-align: center; 
+    margin-bottom: 10px;
+}
+
+
+/* FOOTER */
+
+html {
+  position: relative;
+  min-height: 100%;
+}
+body {
+  /* Margin bottom by footer height */
+  margin-bottom: 60px;
+}
+.footer {
+  position: absolute;
+  bottom: 0;
+  width: 100%;  
+  height: 30px;
+  background-color: #f5f5f5;
+}
+
+
+
+
+.container {
+  margin-bottom: 4em;
+}
+
+#dyttKnapp {
+    margin-top: 4em;
+}
